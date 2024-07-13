@@ -1,0 +1,132 @@
+<template>
+    <div class="slds-is-relative">
+        <!-- ERROR MESSAGE -->
+        <div
+            lwc:if={errorMessage}
+            class="slds-notify slds-notify_alert slds-alert_error"
+            role="alert"
+        >
+            <span class="slds-assistive-text">error</span>
+            <h2>{errorMessage}</h2>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <!-- SPINNER -->
+            <lightning-spinner
+                lwc:if={isLoading}
+                alternative-text="Loading"
+                size="large"
+                variant="brand"
+            >
+            </lightning-spinner>
+            <!-- CONFIGURATION -->
+            <div class="slds-col slds-large-size_4-of-12">
+                <div class="slds-card slds-p-horizontal_medium">
+                    <div class="slds-text-title_caps slds-m-top_medium">
+                        Configuration
+                    </div>
+                    <div class="slds-card__body">
+                        <lightning-textarea
+                            data-name="system-prompt"
+                            label="System Prompt"
+                        >
+                        </lightning-textarea>
+                        <lightning-input
+                            type="file"
+                            label="Model"
+                            onchange={loadModel}
+                            accept="pllm"
+                            class="slds-m-vertical_medium"
+                        >
+                        </lightning-input>
+                        <lightning-badge
+                            lwc:if={modelName}
+                            label={modelName}
+                        ></lightning-badge>
+                        <lightning-input
+                            type="number"
+                            data-name="completionTokenLimit"
+                            label="Completion Token Limit"
+                            value="128"
+                            class="slds-m-vertical_medium"
+                        >
+                        </lightning-input>
+                        <lightning-slider
+                            data-name="temperature"
+                            label="Temperature"
+                            value=".5"
+                            max="1"
+                            min="0.1"
+                            step="0.1"
+                        >
+                        </lightning-slider>
+                    </div>
+                </div>
+            </div>
+            <!-- CHAT -->
+            <div class="slds-col slds-large-size_8-of-12">
+                <div class="slds-card slds-p-horizontal_medium">
+                    <div class="slds-text-title_caps slds-m-top_medium">
+                        Chat
+                    </div>
+                    <div class="slds-card__body">
+                        <section role="log" class="slds-chat slds-box">
+                            <ul class="slds-chat-list">
+                                <!-- MESSAGES WILL APPEAR HERE -->
+                            </ul>
+                        </section>
+                        <div class="slds-media slds-comment slds-hint-parent">
+                            <div class="slds-media__figure">
+                                <span class="slds-avatar slds-avatar_medium">
+                                    <lightning-icon
+                                        icon-name="standard:live_chat"
+                                    ></lightning-icon>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <div
+                                    class="slds-publisher slds-publisher_comment slds-is-active"
+                                >
+                                    <textarea
+                                        data-name="user-prompt"
+                                        class="slds-publisher__input slds-input_bare slds-text-longform"
+                                    >
+                                    </textarea>
+                                    <!-- CONTROLS -->
+                                    <div
+                                        class="slds-publisher__actions slds-grid slds-grid_align-end"
+                                    >
+                                        <ul class="slds-grid"></ul>
+                                        <lightning-button
+                                            class="slds-m-right_medium"
+                                            label="Release Resources"
+                                            variant="destructive-text"
+                                            icon-name="utility:delete"
+                                            onclick={releaseResources}
+                                        >
+                                        </lightning-button>
+                                        <lightning-button
+                                            class="slds-m-right_medium"
+                                            variant="brand-outline"
+                                            label="Stop Generation"
+                                            icon-name="utility:stop"
+                                            onclick={stopGeneration}
+                                        >
+                                        </lightning-button>
+                                        <lightning-button
+                                            variant="brand"
+                                            label="Generate"
+                                            icon-name="utility:sparkles"
+                                            onclick={generate}
+                                            disabled={isGenerating}
+                                        >
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
