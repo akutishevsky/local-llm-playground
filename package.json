@@ -30,6 +30,9 @@
     "prettier": "^3.1.0",
     "prettier-plugin-apex": "^2.0.1"
   },
+  "overrides": {
+    "minimatch": "9.0.9"
+  },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
       "prettier --write"
