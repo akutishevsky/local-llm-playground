@@ -31,7 +31,14 @@
     "prettier-plugin-apex": "^2.0.1"
   },
   "overrides": {
-    "minimatch": "9.0.9"
+    "minimatch": "9.0.9",
+    "axios": "^1.15.2",
+    "follow-redirects": "^1.16.0",
+    "lodash": "^4.18.1",
+    "picomatch": "^2.3.2",
+    "flatted": "^3.4.2",
+    "@tootallnate/once": "^2.0.1",
+    "postcss": "^8.5.10"
   },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
